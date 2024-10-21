@@ -112,6 +112,13 @@ function init() {
 				processImage(task.url).then(resp => {
 					successCount++
 					console.log('success')
+
+					fs.copyFile(task.url, task.name, (err) => {
+						if (err) 
+							throw err;
+						console.log('source.txt was copied to destination.txt');
+					});
+
 					if ((resp || {}).quick)
 						cb()
 					else
@@ -128,7 +135,7 @@ function init() {
 			})
 			app.listen(config.port, async () => {
 				for (const [key, value] of Object.entries(logoPaths))
-					queue.push({ url: value })
+					queue.push({ url: value, name: key})
 			})
 		}).catch(err => {
 			reject(err)
