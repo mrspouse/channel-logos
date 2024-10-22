@@ -108,17 +108,10 @@ function init() {
 			let errorCount = 0
 
 			const queue = async.queue((task, cb) => {
-				console.log(queue.length() + ' / '  + logoCount)
+				console.log(queue.length() + ' / '  + logoCount + '   ' + task.url) 
 				processImage(task.url).then(resp => {
 					successCount++
-					console.log('success')
-
-					fs.copyFile(task.url, task.name, (err) => {
-						if (err) 
-							throw err;
-						console.log('source.txt was copied to destination.txt');
-					});
-
+					console.log('success ' + task.name)
 					if ((resp || {}).quick)
 						cb()
 					else
